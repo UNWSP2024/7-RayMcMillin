@@ -1,25 +1,28 @@
-# Program #3: US_Population
-def main():
-    # Have the user input (using a loop) various information that contains three pieces of data: 
-    # year, name of state, and population.  
-    # Store all of this information in a list of lists.  For example it might be stored like this:
-    
-    # [[2010, "Maine", 1987435], [2010,"Minnesota",6873202], [2011, "Iowa", 3421988]]
-    all_entered_values = []
+# Ray McMillin, 3/7/25, US Population
 
-    # Now have the user enter a year. 
+def main():
+    all_entered_values = []
+    while True:
+        try:
+            year = int(input("Enter year (or -1 to stop): "))
+            if year == -1:
+                break
+            state = input("Enter state name: ")
+            population = int(input("Enter population: "))
+            all_entered_values.append([year, state, population])  
+        except ValueError:
+            print("Invalid input. Please enter valid values for the year and population.")
     
-    # The program will add the populations from all states in the list of list for that year only.
-    # Pass the list and year to the sum_population_for_year
+    return all_entered_values 
 
 def sum_population_for_year(all_entered_values, year_to_sum):
-    # Loop through and sum the populations for the appropriate year. 
-    # e.g. for the list on line 7 the total would be 8,860,637 if the user enterd 2010 for the year to sum,
-    # or 3,421,988 if they enterd 2011 for the year to sum.
+    total_population = sum(entry[2] for entry in all_entered_values if entry[0] == year_to_sum)  
+    return total_population
 
-    # print the totalled population
-
-
-# Call the main function.
 if __name__ == '__main__':
-    main()
+    state_data = main()  
+
+    search_year = int(input("Enter a year to find total population: "))
+    total_population = sum_population_for_year(state_data, search_year)
+
+    print(f"Total population for the year {search_year}: {total_population}")
